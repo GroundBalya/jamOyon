@@ -6,7 +6,6 @@ import AddItemForm from '../component/addItemForm';
 import db from '../config/firebaseConfig';
 import { ref, get, child, push, update, remove } from "firebase/database";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 const HomePage = () => {
     const [inventory, setInventory] = useState([]);
 
@@ -73,8 +72,7 @@ const HomePage = () => {
         <div>
             <Navbar />
             <div className="container mt-4">
-                <h2 className="text-primary mb-4 text-center">Inventory</h2>
-                
+                <h2 className="text-primary mb-4 text-center">Data Stock Jam</h2>
                 <DataTable data={inventory} handleEdit={handleSaveChanges} handleDelete={handleDelete} />
                 <h2 className="text-primary mt-4 text-center">Add Item</h2>
                 <AddItemForm handleAdd={handleAddItem} />
