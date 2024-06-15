@@ -43,7 +43,7 @@ const DataTable = ({ data, handleEdit, handleDelete }) => {
                             <td>{item.location}</td>
                             <td>
                                 <button
-                                    className="btn btn-primary"
+                                    className="btn btn-primary me-4"
                                     onClick={() => handleModalOpen(index)}
                                     style={{ backgroundColor: '#007bff', borderColor: '#007bff' }}
                                 >

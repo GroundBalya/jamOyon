@@ -76,7 +76,7 @@ const HomePage = () => {
                 <h2 className="text-primary mb-4 text-center">Inventory</h2>
                 
                 <DataTable data={inventory} handleEdit={handleSaveChanges} handleDelete={handleDelete} />
-                <h2 className="text-primary mb-4 text-center">Add Item</h2>
+                <h2 className="text-primary mt-4 text-center">Add Item</h2>
                 <AddItemForm handleAdd={handleAddItem} />
             </div>
         </div>

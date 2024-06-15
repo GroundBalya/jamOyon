@@ -53,7 +53,7 @@ const AddItemForm = ({ handleAdd }) => {
                 <label>Location</label>
                 <input type="text" className="form-control" name="location" value={formData.location} onChange={handleChange} />
             </div>
-            <button type="submit" className="btn btn-primary btn-block">Add Item</button>
+            <button type="submit" className="btn btn-primary btn-block mt-3">Add Item</button>
         </form>
     );
 };

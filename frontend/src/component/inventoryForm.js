@@ -58,7 +58,7 @@ const InventoryForm = ({ currentItem, handleSave }) => {
                 <label>Location</label>
                 <input type="text" className="form-control" name="location" value={formData.location} onChange={handleChange} />
             </div>
-            <button type="submit" className="btn btn-primary btn-block">Save</button>
+            <button type="submit" className="btn btn-primary btn-block mt-2">Save</button>
         </form>
     );
 };
