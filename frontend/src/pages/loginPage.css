@@ -1,0 +1,35 @@
+/* src/pages/LoginPage.css */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-color: #f8f9fa; /* Light background for better visibility */
+}
+
+.login-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    background: linear-gradient(135deg, #ffb700, #007bff); /* Gradient background with yellow and blue */
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.login-form h2 {
+    color: #fcfbf9; /* Yellow color for heading */
+    text-align: center;
+}
+
+.login-form .btn-primary {
+    background-color: #ffd700; /* Yellow color for button */
+    border-color: #ffd700; /* Yellow color for button border */
+    width: 100%; /* Make button full width */
+    margin-top: 20px; /* Add some space above the button */
+}
+
+.login-form .btn-primary:hover {
+    background-color: #ffc107; /* Darker yellow color on hover */
+    border-color: #ffc107; /* Darker yellow color on hover */
+}
