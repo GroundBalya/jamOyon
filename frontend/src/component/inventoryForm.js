@@ -1,4 +1,3 @@
-// src/components/InventoryForm.js
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -14,6 +13,7 @@ const InventoryForm = ({ currentItem, handleSave }) => {
     useEffect(() => {
         if (currentItem) {
             setFormData({
+                _id: currentItem._id || '',
                 brand: currentItem.brand,
                 model: currentItem.model,
                 quantity: currentItem.quantity,
