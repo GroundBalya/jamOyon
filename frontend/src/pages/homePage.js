@@ -74,7 +74,7 @@ const HomePage = () => {
             title: 'Add New Item',
             html:
                 `<input id="swal-input1" class="swal2-input" placeholder="Brand">` +
-                `<input id="swal-input2" class="swal2-input" placeholder="Model">` +
+                `<input id="swal-input2" class="swal2-input" placeholder="Warna">` +
                 `<input id="swal-input3" class="swal2-input" placeholder="Quantity" type="number">` +
                 `<input id="swal-input4" class="swal2-input" placeholder="Price" type="number">` +
                 `<input id="swal-input5" class="swal2-input" placeholder="Location">`,
@@ -91,18 +91,30 @@ const HomePage = () => {
         });
 
         if (formValues) {
-            setLoading(true);  // Start loading
-            try {
-                const dbRef = ref(db, 'inventory');
-                const newItemRef = await push(dbRef, formValues);
-                const newItem = { _id: newItemRef.key, ...formValues };
-                setInventory(prevInventory => [...prevInventory, newItem]);
-                Swal.fire('Success', 'Item added successfully!', 'success');
-            } catch (error) {
-                console.error('Error adding item:', error);
-                Swal.fire('Error', 'Failed to add item.', 'error');
+            const { brand, model, location } = formValues;
+            // Check for duplicates
+            const isDuplicate = inventory.some(item =>
+                item.brand.toLowerCase() === brand.toLowerCase() &&
+                item.model.toLowerCase() === model.toLowerCase() &&
+                item.location.toLowerCase() === location.toLowerCase()
+            );
+
+            if (isDuplicate) {
+                Swal.fire('Error', 'Duplicate item found. Cannot add the item.', 'error');
+            } else {
+                setLoading(true);  // Start loading
+                try {
+                    const dbRef = ref(db, 'inventory');
+                    const newItemRef = await push(dbRef, formValues);
+                    const newItem = { _id: newItemRef.key, ...formValues };
+                    setInventory(prevInventory => [...prevInventory, newItem]);
+                    Swal.fire('Success', 'Item added successfully!', 'success');
+                } catch (error) {
+                    console.error('Error adding item:', error);
+                    Swal.fire('Error', 'Failed to add item.', 'error');
+                }
+                setLoading(false);  // End loading
             }
-            setLoading(false);  // End loading
         }
     };
 

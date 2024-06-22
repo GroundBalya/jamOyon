@@ -14,12 +14,16 @@ const DataTable = ({ data, handleEdit, handleDelete }) => {
 
     const itemsPerPage = 10; // Number of items per page
     const pagesVisited = pageNumber * itemsPerPage;
-    const pageCount = Math.ceil(data.length / itemsPerPage);
+    
 
      const filteredData = data.filter((item) => {
-        return item.brand.toLowerCase().includes(searchTerm.toLowerCase()) || item.location.toLowerCase().includes(searchTerm.toLowerCase());
+        return (
+            item.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.location.toLowerCase().includes(searchTerm.toLowerCase())
+        );
     });
-
+    const pageCount = Math.ceil(filteredData.length / itemsPerPage);
     const displayData = filteredData.slice(pagesVisited, pagesVisited + itemsPerPage).map((item, index) => (
         <tr key={index}>
             <td>{item.brand}</td>
@@ -37,7 +41,7 @@ const DataTable = ({ data, handleEdit, handleDelete }) => {
                 </button>
                 <button
                     className="btn btn-warning ml-2"
-                    onClick={() => handleDelete(index + pagesVisited, item._id)}
+                    onClick={() => confirmDelete(index + pagesVisited, item._id)}
                     style={{ backgroundColor: '#ffc107', borderColor: '#ffc107' }}
                 >
                     Delete
@@ -72,7 +76,22 @@ const DataTable = ({ data, handleEdit, handleDelete }) => {
         setShowModal(false);
         Swal.fire('Success', 'Item updated successfully!', 'success');
     };
-
+    const confirmDelete = (index, itemId) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleDelete(index, itemId);
+                Swal.fire('Deleted!', 'Your item has been deleted.', 'success');
+            }
+        });
+    };
     return (
         <div>
             {/* Search Bar */}
@@ -80,6 +99,14 @@ const DataTable = ({ data, handleEdit, handleDelete }) => {
                 type="text"
                 placeholder="Search..."
                 value={searchTerm}
+                style={{
+                    marginBottom: '20px',
+                    padding: '10px',
+                    width: '100%',
+                    boxSizing: 'border-box',
+                    border: '1px solid #007bff',
+                    borderRadius: '4px'
+                }}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
 
@@ -87,7 +114,7 @@ const DataTable = ({ data, handleEdit, handleDelete }) => {
                 <thead>
                     <tr>
                         <th>Brand</th>
-                        <th>Model</th>
+                        <th>Warna</th>
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Location</th>
@@ -118,6 +145,7 @@ const DataTable = ({ data, handleEdit, handleDelete }) => {
                 nextClassName={'page-item'}
                 nextLinkClassName={'page-link'}
                 activeClassName={'active'}
+                forcePage={pageNumber}
             />
 
             {/* Edit Modal */}
@@ -126,7 +154,13 @@ const DataTable = ({ data, handleEdit, handleDelete }) => {
                     <Modal.Title>Edit Item</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <InventoryForm currentItem={data[selectedIndex]} handleSave={handleSaveChanges} />
+                    {selectedIndex !== null && (
+                        <InventoryForm
+                            currentItem={data[selectedIndex]}
+                            handleSave={handleSaveChanges}
+                            data={data}
+                        />
+                    )}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleModalClose}>

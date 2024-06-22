@@ -38,7 +38,7 @@ const AddItemForm = ({ handleAdd }) => {
                 <input type="text" className="form-control" name="brand" value={formData.brand} onChange={handleChange} />
             </div>
             <div className="form-group">
-                <label>Model</label>
+                <label>Warna</label>
                 <input type="text" className="form-control" name="model" value={formData.model} onChange={handleChange} />
             </div>
             <div className="form-group">

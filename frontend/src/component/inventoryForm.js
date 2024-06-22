@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const InventoryForm = ({ currentItem, handleSave }) => {
+const InventoryForm = ({ currentItem, handleSave ,data }) => {
     const [formData, setFormData] = useState({
         brand: '',
         model: '',
@@ -33,6 +33,18 @@ const InventoryForm = ({ currentItem, handleSave }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        // Check for duplicates
+        const isDuplicate = data.some(item => 
+            item.brand.toLowerCase() === formData.brand.toLowerCase() &&
+            item.model.toLowerCase() === formData.model.toLowerCase() &&
+            item.location.toLowerCase() === formData.location.toLowerCase() &&
+            item._id !== formData._id
+        );
+
+        if (isDuplicate) {
+            Swal.fire('Error', 'Item with the same brand, model, and location already exists.', 'error');
+            return;
+        }
         handleSave(formData);
     };
 
